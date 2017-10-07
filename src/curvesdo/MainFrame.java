@@ -5,13 +5,21 @@
  */
 package curvesdo;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author mohamednagy
  */
-public class CurvesDo {
-
+public class MainFrame {
+    
+    private static JFrame mFrame;
+    
     public static void main(String args[]) {
-        
+        mFrame = new JFrame();
+        ImagePanel imagePanel = new ImagePanel();
+        mFrame.setSize(imagePanel.getWidth(), imagePanel.getHeight());
+        mFrame.setVisible(true);
     }
+    
 }
