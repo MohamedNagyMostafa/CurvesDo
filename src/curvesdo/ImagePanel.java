@@ -5,12 +5,7 @@
  */
 package curvesdo;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
@@ -25,5 +20,17 @@ public class ImagePanel extends JPanel{
     public void paint(Graphics graphics) {
         graphics.drawImage(CurveImage.getInstance().getImage(), IMAGE_X_POSIITION, IMAGE_Y_POSISITON, this);
     }  
+
+    @Override
+    public int getWidth() {
+        return CurveImage.getInstance().getImage().getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return CurveImage.getInstance().getImage().getHeight();
+    }
+    
+    
     
 }

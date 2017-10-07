@@ -16,10 +16,17 @@ public class MainFrame {
     private static JFrame mFrame;
     
     public static void main(String args[]) {
-        mFrame = new JFrame();
+        initComponent();
+    }
+    
+    private static void initComponent(){
         ImagePanel imagePanel = new ImagePanel();
+        ImageProcessing imageProcessing = new ImageProcessing();
+        mFrame = new JFrame();
+        
         mFrame.add(imagePanel);
         mFrame.setSize(imagePanel.getWidth(), imagePanel.getHeight());
+        mFrame.setResizable(false);
         mFrame.setVisible(true);
     }
     

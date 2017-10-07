@@ -6,7 +6,6 @@
 package curvesdo;
 
 import static com.sun.corba.se.impl.util.Utility.printStackTrace;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class CurveImage {
     private CurveImage(){
         try{
             init();
-        }catch(Exception e){
+        }catch(IOException e){
             printStackTrace();
         }
     }
