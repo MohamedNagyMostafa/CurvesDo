@@ -18,6 +18,7 @@ public class MainFrame {
     public static void main(String args[]) {
         mFrame = new JFrame();
         ImagePanel imagePanel = new ImagePanel();
+        mFrame.add(imagePanel);
         mFrame.setSize(imagePanel.getWidth(), imagePanel.getHeight());
         mFrame.setVisible(true);
     }
