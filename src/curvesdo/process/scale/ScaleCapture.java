@@ -6,6 +6,7 @@
 package curvesdo.process.scale;
 
 import com.sun.istack.internal.localization.NullLocalizable;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import curvesdo.process.CurveImage;
 import curvesdo.properties.Point;
 import curvesdo.properties.Scale;
@@ -17,8 +18,8 @@ import java.awt.Color;
  */
 public class ScaleCapture {
       
-    private Line mLineTester;
-    private Line mLineTaller;
+    private Line mLineTester = null;
+    private Line mLineTaller = null;
    
     public void add(Point point){
         if(mLineTester == null){
@@ -32,8 +33,8 @@ public class ScaleCapture {
                 )
             );
         }else{
-            if(new Color(CurveImage.getInstance().getImage().getRGB(point.getX(), point.getY()))
-                    != mLineTester.getColor()){
+            if(CurveImage.getInstance().getImage().getRGB(point.getX(), point.getY())
+                    != mLineTester.getColor().getRGB()){
                 setTallerLine();
             }else{
                 mLineTester.setEndPoint(point);
@@ -42,18 +43,25 @@ public class ScaleCapture {
     }
     
     private void setTallerLine(){
-        if(mLineTester != null){
+        if(mLineTester != null && mLineTester.getEndPoint() != null){
             if(mLineTaller != null){
-                if(mLineTaller.getLength() < mLineTester.getLength())
-                    mLineTaller = mLineTester;
+                if(mLineTaller.getLength() < mLineTester.getLength()){
+                    mLineTaller.setStartPoint(mLineTester.getStartPoint());
+                    mLineTaller.setEndPoint(mLineTester.getEndPoint());
+                    mLineTaller.setColor(mLineTester.getColor());
+                }
             }else{
-                mLineTaller = mLineTester;
+                mLineTaller = mLineTester;mLineTaller.setStartPoint(mLineTester.getStartPoint());
+                mLineTaller.setEndPoint(mLineTester.getEndPoint());
+                mLineTaller.setColor(mLineTester.getColor());
             }
             mLineTester = null;
         }
     }
     
     public Line getTallerLine(){
+        if(mLineTaller != null)
+            Util.println("detect not null " + mLineTaller.getLength());
         return mLineTaller;
     }
     

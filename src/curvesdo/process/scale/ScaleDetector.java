@@ -7,6 +7,7 @@ package curvesdo.process.scale;
 
 import curvesdo.properties.Scale;
 import static com.sun.corba.se.impl.util.Utility.printStackTrace;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import curvesdo.process.CurveImage;
 import curvesdo.properties.Point;
 import java.awt.Color;
@@ -33,14 +34,17 @@ public abstract class ScaleDetector {
             
             for(int yPixelPosition = 0; yPixelPosition < ImageHeight; yPixelPosition++){
                 for(int xPixelPosition = 0; xPixelPosition < ImageWidth; xPixelPosition++){
-                    if(new Color(curveImage.getImage().getRGB(xPixelPosition, yPixelPosition)) == backgroundColor){
+                    if(curveImage.getImage().getRGB(xPixelPosition, yPixelPosition) == backgroundColor.getRGB()){
                         scaleCapture.detectBackground();
                     }else{
                         scaleCapture.add(new Point(xPixelPosition, yPixelPosition));
+
                     }
                 }
             }
             curveScale.setHorizontalLine(scaleCapture.getTallerLine());
+            Util.println("done1 ...............");
+
         });
         Thread verticalDetect =new Thread(()->{
             CurveImage curveImage = CurveImage.getInstance();
@@ -49,9 +53,9 @@ public abstract class ScaleDetector {
             int ImageHeight = curveImage.getImage().getHeight();
             int ImageWidth = curveImage.getImage().getWidth();
             
-            for(int xPixelPosition = 0; xPixelPosition < ImageHeight; xPixelPosition++){
-                for(int yPixelPosition = 0; yPixelPosition < ImageWidth; yPixelPosition++){
-                    if(new Color(curveImage.getImage().getRGB(xPixelPosition, yPixelPosition)) == backgroundColor){
+            for(int xPixelPosition = 0; xPixelPosition < ImageWidth; xPixelPosition++){
+                for(int yPixelPosition = 0; yPixelPosition < ImageHeight; yPixelPosition++){
+                    if(curveImage.getImage().getRGB(xPixelPosition, yPixelPosition) == backgroundColor.getRGB()){
                         scaleCapture.detectBackground();
                     }else{
                         scaleCapture.add(new Point(xPixelPosition, yPixelPosition));
@@ -59,6 +63,7 @@ public abstract class ScaleDetector {
                 }
             }
             curveScale.setVerticalLine(scaleCapture.getTallerLine());
+            Util.println("done2");
         });
         
         horizontalDetect.start();
@@ -67,11 +72,13 @@ public abstract class ScaleDetector {
         try{
             horizontalDetect.join();
             verticalDetect.join();
+            
         }catch(InterruptedException e){
             printStackTrace();
         }
-        
+        Util.println("done3");
         onFinished(curveScale);
+        
     }
     
     public abstract void onFinished(Scale scale);
