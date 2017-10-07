@@ -42,16 +42,22 @@ public class ScaleCapture {
     }
     
     private void setTallerLine(){
-        if(mLineTaller != null){
-            if(mLineTaller.getLength() < mLineTester.getLength())
+        if(mLineTester != null){
+            if(mLineTaller != null){
+                if(mLineTaller.getLength() < mLineTester.getLength())
+                    mLineTaller = mLineTester;
+            }else{
                 mLineTaller = mLineTester;
-        }else{
-            mLineTaller = mLineTester;
+            }
+            mLineTester = null;
         }
-        mLineTester = null;
     }
     
     public Line getTallerLine(){
         return mLineTaller;
+    }
+    
+    public void detectBackground(){
+        setTallerLine();
     }
 }

@@ -12,8 +12,26 @@ import java.awt.Color;
  *
  * @author mohamednagy
  */
-public class Scale extends Line{
+public class Scale {
     
+    private Line mHorizontalLine;
+    private Line mVerticalLine;
+
+    public void setHorizontalLine(Line mHorizontalLine) {
+        this.mHorizontalLine = mHorizontalLine;
+    }
+
+    public void setVerticalLine(Line mVerticalLine) {
+        this.mVerticalLine = mVerticalLine;
+    }
+
+    public Line getHorizontalLine() {
+        return mHorizontalLine;
+    }
+
+    public Line getVerticalLine() {
+        return mVerticalLine;
+    }
     
     
 }

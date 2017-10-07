@@ -7,6 +7,8 @@ package curvesdo.process;
 
 import curvesdo.process.backgroundColor.ImageColorWatcher;
 import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
+import curvesdo.process.scale.ScaleDetector;
+import curvesdo.properties.Scale;
 import java.awt.Color;
 
 /**
@@ -25,14 +27,17 @@ public class ImageProcessing extends Thread{
     
     @Override
     public void run() {
-        
         // Detect Image Color.
-        ImageColorWatcher imageDetails = new ImageColorWatcher() {
+        new ImageColorWatcher() {
             @Override
             public void onFinished(Color backGroundColor) {
-               
-                Util.println("R: "+ backGroundColor.getRed() + " G: " + backGroundColor.getGreen() + " B: " + backGroundColor.getBlue());
-
+                new ScaleDetector(backGroundColor) {
+                    @Override
+                    public void onFinished(Scale scale) {
+                        Util.println("dy:" + scale.getVerticalLine().getLength() + " dx " + scale.getHorizontalLine().getLength());
+                    }
+                };
+              
             }
         };
     }
