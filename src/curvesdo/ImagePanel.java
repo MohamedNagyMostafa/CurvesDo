@@ -18,23 +18,12 @@ import javax.swing.JPanel;
  * @author mohamednagy
  */
 public class ImagePanel extends JPanel{
-    
+    private static final int IMAGE_X_POSIITION = 0;
+    private static final int IMAGE_Y_POSISITON = 0;
     
     @Override
     public void paint(Graphics graphics) {
-        insertImage(graphics);
-    }
-    
-    private void insertImage(Graphics graphics){
-        try{
-            BufferedImage imageIO = ImageIO.read(
-                    new File("C:\\Users\\mohamednagy.mohamednagy-PC\\Desktop\\Seasons1\\2009\\autumn-avg.png"));
-            graphics.drawImage(imageIO, 0, 0, this);
-        }catch(IOException iOException){
-            
-        }
-    }
-    
-    
+        graphics.drawImage(CurveImage.getInstance().getImage(), IMAGE_X_POSIITION, IMAGE_Y_POSISITON, this);
+    }  
     
 }
