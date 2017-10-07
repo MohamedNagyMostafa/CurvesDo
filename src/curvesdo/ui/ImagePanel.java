@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package curvesdo;
+package curvesdo.ui;
 
+import curvesdo.process.CurveImage;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 

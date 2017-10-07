@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package curvesdo;
+package curvesdo.process;
 
 import static com.sun.corba.se.impl.util.Utility.printStackTrace;
 import java.awt.image.BufferedImage;

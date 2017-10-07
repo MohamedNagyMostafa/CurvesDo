@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package curvesdo;
+package curvesdo.properties;
 
 /**
  *
@@ -18,19 +18,19 @@ public class Point {
         mY = y;
     }
 
-    public int getmX() {
+    public int getX() {
         return mX;
     }
 
-    public int getmY() {
+    public int getY() {
         return mY;
     }
 
-    public void setmX(int mX) {
+    public void setX(int mX) {
         this.mX = mX;
     }
 
-    public void setmY(int mY) {
+    public void setY(int mY) {
         this.mY = mY;
     }
     

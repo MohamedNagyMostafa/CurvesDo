@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package curvesdo;
+package curvesdo.process;
 
+import curvesdo.process.backgroundColor.ImageColorWatcher;
 import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import java.awt.Color;
 
