@@ -5,16 +5,16 @@
  */
 package curvesdo.properties;
 
-import java.awt.Color;
-
 /**
  *
  * @author mohamednagy
  */
 public class Scale {
     private static final int MAX_SWAPPING = 4;
+    
     private Line mHorizontalLine;
     private Line mVerticalLine;
+    
     private int mHorizontalLineCounter;
     private int mVerticalLineCounter;
 
@@ -32,6 +32,18 @@ public class Scale {
 
     public Line getVerticalLine() {
         return mVerticalLine;
+    }
+
+    public int getHorizontalLineCounter() {
+        return mHorizontalLineCounter;
+    }
+
+    public int getVerticalLineCounter() {
+        return mVerticalLineCounter;
+    }
+    
+    public int getScaleColorRGB(){
+        return mVerticalLine.getColor().getRGB();
     }
     
     public void refresh(){

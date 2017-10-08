@@ -16,12 +16,12 @@ import java.util.ListIterator;
  *
  * @author mohamednagy
  */
-public class ImageColor  extends ArrayList<Color>{
+public class ImageColorRates  extends ArrayList<Color>{
     private final ArrayList<Integer> colorExistance;
     private static final int INITIAL_VALUE = 1;
     private static final int COUNTER_VALUE = INITIAL_VALUE;
     
-    public ImageColor(){
+    public ImageColorRates(){
         colorExistance = new ArrayList<>();
     }       
     
@@ -37,6 +37,9 @@ public class ImageColor  extends ArrayList<Color>{
         return true;
     }
     
+    public Iterator<Color> getImageColors(){
+        return super.iterator();
+    }
     public Color getBackgroundColor(){
         int index = 0;
         

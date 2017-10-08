@@ -7,6 +7,8 @@ package curvesdo.process.backgroundColor;
 
 import curvesdo.process.CurveImage;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -22,16 +24,17 @@ public abstract class ImageColorWatcher {
         new Thread(()-> {
             
             CurveImage curveImage = CurveImage.getInstance();
-            ImageColor imageColor = new ImageColor();
+            ImageColorRates imageColor = new ImageColorRates();
             
             for(int xPixelPosition = 0; xPixelPosition < curveImage.getImage().getWidth() ; xPixelPosition++){
                 for(int yPixelPosition = 0 ; yPixelPosition < curveImage.getImage().getHeight() ; yPixelPosition++){
                     imageColor.add(new Color(curveImage.getImage().getRGB(xPixelPosition, yPixelPosition)));
                 }
             }
-            onFinished(imageColor.getBackgroundColor());
+            
+            onFinished(imageColor, imageColor.getBackgroundColor());
         }).start();
     }
     
-    public abstract void onFinished(Color backGroundColor);
+    public abstract void onFinished(List<Color> colorsInImage, Color backgroundColor);
 }
