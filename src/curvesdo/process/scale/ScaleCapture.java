@@ -5,11 +5,9 @@
  */
 package curvesdo.process.scale;
 
-import com.sun.istack.internal.localization.NullLocalizable;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
+import curvesdo.properties.Line;
 import curvesdo.process.CurveImage;
 import curvesdo.properties.Point;
-import curvesdo.properties.Scale;
 import java.awt.Color;
 
 /**
@@ -60,8 +58,6 @@ public class ScaleCapture {
     }
     
     public Line getTallerLine(){
-        if(mLineTaller != null)
-            Util.println("detect not null " + mLineTaller.getLength());
         return mLineTaller;
     }
     

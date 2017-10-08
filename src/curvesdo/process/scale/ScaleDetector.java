@@ -43,7 +43,6 @@ public abstract class ScaleDetector {
                 }
             }
             curveScale.setHorizontalLine(scaleCapture.getTallerLine());
-            Util.println("done1 ...............");
 
         });
         Thread verticalDetect =new Thread(()->{
@@ -63,7 +62,6 @@ public abstract class ScaleDetector {
                 }
             }
             curveScale.setVerticalLine(scaleCapture.getTallerLine());
-            Util.println("done2");
         });
         
         horizontalDetect.start();
@@ -76,9 +74,8 @@ public abstract class ScaleDetector {
         }catch(InterruptedException e){
             printStackTrace();
         }
-        Util.println("done3");
-        onFinished(curveScale);
         
+        onFinished(curveScale);        
     }
     
     public abstract void onFinished(Scale scale);

@@ -5,7 +5,6 @@
  */
 package curvesdo.process.backgroundColor;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import curvesdo.process.CurveImage;
 import java.awt.Color;
 
