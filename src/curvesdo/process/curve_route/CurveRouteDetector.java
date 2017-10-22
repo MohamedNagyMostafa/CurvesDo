@@ -5,10 +5,12 @@
  */
 package curvesdo.process.curve_route;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import curvesdo.process.CurveImage;
 import curvesdo.properties.Curve;
 import curvesdo.properties.Point;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +50,17 @@ public class CurveRouteDetector {
             mGThreads[gthreadIndex] = new GThread<List<Point>>(){
                 @Override
                 public List<Point> onProgress() {
-                    Point point = null;
+                    Point curveStartPoint = findStartPoint(mCurves.get(curveIndex).getCurveColor());
+                    
+                    Color curveColor = mCurves.get(curveIndex).getCurveColor();
+                    Graphics graphics = CurveImage.getInstance().getImage().getGraphics();
+                    graphics.setColor(Color.WHITE);
                     List<Point> points = new ArrayList<>();
                     
-                    while((point = nextPoint(point, mCurves.get(curveIndex).getCurveColor())) != null){
-                        points.add(point);
+                    while(curveStartPoint != null){
+                        points.add(curveStartPoint);
+                        graphics.drawLine(curveStartPoint.getX(), curveStartPoint.getY(), curveStartPoint.getX(), curveStartPoint.getY());
+                        curveStartPoint = nextPoint(curveStartPoint, curveColor);
                     }
                     
                     return points;
@@ -70,11 +78,12 @@ public class CurveRouteDetector {
     // Get next point of curve.
     private Point nextPoint(Point point, Color color){
         Point nextPoint = null;
+        
         BufferedImage bufferedImage = CurveImage.getInstance().getImage();
         mover:
         for(int x_pixel = point.getX(); x_pixel <= point.getX() +1 ; x_pixel++){
-            for(int y_pixel = point.getY() +1; y_pixel >= point.getY() -1; y_pixel++){
-                if(x_pixel != point.getX() && y_pixel != point.getY()){
+            for(int y_pixel = point.getY() -1; y_pixel <= point.getY() +1; y_pixel++){
+                if(!(x_pixel == point.getX() && y_pixel == point.getY())){
                     if(bufferedImage.getRGB(x_pixel, y_pixel) == color.getRGB()){
                         nextPoint = new Point(x_pixel, y_pixel);
                         break mover;
@@ -82,6 +91,8 @@ public class CurveRouteDetector {
                 }    
             }
         }
+        if(nextPoint != null)
+            Util.println("(" + nextPoint.getX() + "," + nextPoint.getY() + ")");
         return nextPoint;
     }
     // Get start point of curve from left.
@@ -90,22 +101,23 @@ public class CurveRouteDetector {
         BufferedImage bufferedImage = CurveImage.getInstance().getImage();
         
         for(int x_pixel = mStartHorizontalPoint.getX(); x_pixel <= mEndHorizontalPoint.getX(); x_pixel++){
-            for(int y_pixel = mStartVerticalPoint.getY(); y_pixel <= mEndVerticalPoint.getY(); y_pixel++){
+            for(int y_pixel = mStartVerticalPoint.getY(); y_pixel >= mEndVerticalPoint.getY(); y_pixel--){
                 if(bufferedImage.getRGB(x_pixel, y_pixel) == color.getRGB()){
                     startPoint = new Point(x_pixel, y_pixel);
                     break;
                 }
             }
         }
-        
+        if(startPoint != null)
+        Util.println("not error " + startPoint.getX() + " Ys: " + mStartHorizontalPoint.getX() + " Ye: " + mEndHorizontalPoint.getX());
         return startPoint;
     }
     
-    private List<Curve> getCurves(){
+    public List<Curve> getCurves(){
         return mCurves;
     }
     
-    private GThread[] getGThreads(){
+    public GThread[] getGThreads(){
         return mGThreads;
     }
 }

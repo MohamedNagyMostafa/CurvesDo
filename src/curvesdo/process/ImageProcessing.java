@@ -26,6 +26,7 @@ import methods.ScheduleGThread;
  */
 public class ImageProcessing extends Thread{
     
+    
     public ImageProcessing(){
         init();
     }
@@ -37,23 +38,48 @@ public class ImageProcessing extends Thread{
     @Override
     public void run() {
         // Detect Image Color.
-        final ImageDetails imageColors = new ImageDetails();
+        final ImageDetails imageDetails = new ImageDetails();
         
         new ImageColorWatcher() {
             @Override
             public void onFinished(List<Color> imageColorsList, Color backgroundColor) {
-                imageColors.addColors(imageColorsList);
-                imageColors.setBackgroundColor(backgroundColor);
+                imageDetails.addColors(imageColorsList);
+                imageDetails.setBackgroundColor(backgroundColor);
                 
                 try {
-                    new ScaleDetector(imageColors.getBackgroundColor()) {
+                    new ScaleDetector(imageDetails.getBackgroundColor()) {
                         @Override
                         public void onFinished(Scale scale) {
-                            scale.refresh();
-                            imageColors.setScale(scale);
-                         
-                            
-                            
+                            try {
+                                scale.refresh();
+                                imageDetails.setScale(scale);
+                                
+                                CurveRouteDetector curveRouteDetector = 
+                                        new CurveRouteDetector(
+                                        imageDetails.getCurves(),
+                                        imageDetails.getScale().getVerticalLine().getStartPoint(),
+                                        imageDetails.getScale().getVerticalLine().getEndPoint(),
+                                        imageDetails.getScale().getHorizontalLine().getStartPoint(),
+                                        imageDetails.getScale().getHorizontalLine().getEndPoint());
+                                
+                                int workers = 1;
+                                
+                                ScheduleGThread scheduleGThread = new ScheduleGThread(
+                                        workers,
+                                        curveRouteDetector.getGThreads())
+                                {
+                                    @Override
+                                    public void onScheduleFinished() {
+                                        imageDetails.setCurves(curveRouteDetector.getCurves());
+                                        Util.println("done " + imageDetails.getCurves().get(0).getCurveRoutePoints().size());
+                                       
+                                    }
+                                };
+                                
+                                scheduleGThread.start();
+                            } catch (ColorNotFound ex) {
+                                Logger.getLogger(ImageProcessing.class.getName()).log(Level.SEVERE, null, ex);
+                            }  
                         }
                     };
                 } catch (ColorNotFound ex) {

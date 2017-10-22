@@ -6,7 +6,9 @@
 package curvesdo.properties;
 
 import Exceptions.ColorNotFound;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,13 +64,17 @@ public class ImageDetails {
     public List<Curve> getCurves(){
         if(mCurves == null)
             setCurves();
-        
         return mCurves;
     }
     
     private void setCurves(){
+        mCurves = new ArrayList<>();
         mImageColors.forEach((color) -> {
             mCurves.add(new Curve(color));
         });
+    }
+    
+    public void setCurves(List<Curve> curves){
+        mCurves = curves;
     }
 }
