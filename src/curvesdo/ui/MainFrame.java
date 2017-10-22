@@ -6,6 +6,7 @@
 package curvesdo.ui;
 
 import curvesdo.process.ImageProcessing;
+import java.awt.Dimension;
 import javax.swing.JFrame;
 
 /**
@@ -27,7 +28,7 @@ public class MainFrame {
         
         mFrame.add(imagePanel);
         mFrame.setSize(imagePanel.getWidth(), imagePanel.getHeight());
-        mFrame.setResizable(false);
+        mFrame.setMaximumSize(new Dimension(imagePanel.getWidth(), imagePanel.getHeight()));
         mFrame.setVisible(true);
     }
     

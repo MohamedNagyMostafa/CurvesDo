@@ -5,9 +5,11 @@
  */
 package curvesdo.process.max_min_point;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import curvesdo.process.CurveImage;
 import curvesdo.properties.Curve;
 import curvesdo.properties.Point;
+import curvesdo.ui.ImagePanel;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -20,21 +22,31 @@ import methods.GThread;
  */
 public class MaxMinPointDetector {
     
-    private Curve[] mCurves;
+    private final Curve[] mCurves;
+    private final int mStartVerticalPoint;
+    private final int mEndVerticalPoint;
+    private final int mStartHorizontalPoint;
+    private final int mEndHorizontalPoint;
     private GThread[] mGThreads;
     
-    public MaxMinPointDetector(Curve[] curves){
+    public MaxMinPointDetector(Curve[] curves, int startHorizontalPoint, int endHorizontalPoint, 
+            int startVerticalPoint, int endVerticalPoint){
         mCurves = curves;
+        mStartVerticalPoint = startVerticalPoint;
+        mEndVerticalPoint = endVerticalPoint;
+        mStartHorizontalPoint = startHorizontalPoint;
+        mEndHorizontalPoint = endHorizontalPoint;
         init();
     }
     
     private <T> void init(){
         mGThreads = new GThread[mCurves.length * 2];
         
-        for(int curveIndex = 0; curveIndex < mCurves.length; curveIndex++){
+        for(int curveIndex = 0, gthreadIndex = 0; curveIndex < mCurves.length; 
+                curveIndex++, gthreadIndex = gthreadIndex + 2){
             final int index = curveIndex;
             
-            mGThreads[curveIndex] = new GThread<T>(){
+            mGThreads[gthreadIndex] = new GThread<T>(){
                 @Override
                 public T onProgress() {
                     
@@ -50,7 +62,7 @@ public class MaxMinPointDetector {
                 
             };
             
-            mGThreads[curveIndex + 1] = new GThread<T>(){
+            mGThreads[gthreadIndex + 1] = new GThread<T>(){
                 @Override
                 public T onProgress() {
                     
@@ -73,9 +85,10 @@ public class MaxMinPointDetector {
         BufferedImage bufferedImage = CurveImage.getInstance().getImage();
         int imageHeight = bufferedImage.getHeight();
         int imageWidth = bufferedImage.getWidth();
+    
         
-        for(int verticalPixels = imageHeight; verticalPixels >= 0; verticalPixels--){
-            for(int horizontalPixels = 0; horizontalPixels <= imageWidth; horizontalPixels++){
+        for(int verticalPixels = imageHeight - 1; verticalPixels >= 0; verticalPixels--){
+            for(int horizontalPixels = 0; horizontalPixels < imageWidth; horizontalPixels++){
                 if(bufferedImage.getRGB(verticalPixels, horizontalPixels) == color.getRGB()){
                     points.add(new Point(verticalPixels, horizontalPixels));
                 }
@@ -98,8 +111,8 @@ public class MaxMinPointDetector {
         int imageHeight = bufferedImage.getHeight();
         int imageWidth = bufferedImage.getWidth();
         
-        for(int verticalPixels = 0; verticalPixels <= imageHeight; verticalPixels++){
-            for(int horizontalPixels = imageWidth; horizontalPixels >= 0 ; horizontalPixels--){
+        for(int verticalPixels = 0; verticalPixels < imageHeight; verticalPixels++){
+            for(int horizontalPixels = imageWidth - 1; horizontalPixels >= 0 ; horizontalPixels--){
                 if(bufferedImage.getRGB(verticalPixels, horizontalPixels) == color.getRGB()){
                     points.add(new Point(verticalPixels, horizontalPixels));
                 }
@@ -120,4 +133,11 @@ public class MaxMinPointDetector {
         return mCurves;
     }
     
+    public GThread[] getGthreads(){
+        return mGThreads;
+    }
+    
+    public int getGhtreadWorkers(){
+        return mCurves.length;
+    }
 }

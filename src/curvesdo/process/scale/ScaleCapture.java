@@ -46,14 +46,16 @@ public class ScaleCapture {
                 if(mLineTaller.getLength() < mLineTester.getLength()){
                     mLineTaller.setStartPoint(mLineTester.getStartPoint());
                     mLineTaller.setEndPoint(mLineTester.getEndPoint());
-                    mLineTaller.setColor(mLineTester.getColor());
+                    mLineTaller.setColor(mLineTester.getColor());    
                 }
             }else{
-                mLineTaller = mLineTester;
+                mLineTaller = new Line();
                 mLineTaller.setStartPoint(mLineTester.getStartPoint());
                 mLineTaller.setEndPoint(mLineTester.getEndPoint());
                 mLineTaller.setColor(mLineTester.getColor());
             }
+            mLineTester = null;
+        }else{
             mLineTester = null;
         }
     }

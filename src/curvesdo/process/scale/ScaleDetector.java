@@ -5,8 +5,8 @@
  */
 package curvesdo.process.scale;
 
-import curvesdo.properties.Scale;
 import static com.sun.corba.se.impl.util.Utility.printStackTrace;
+import curvesdo.properties.Scale;
 import curvesdo.process.CurveImage;
 import curvesdo.properties.Point;
 import java.awt.Color;
@@ -31,7 +31,7 @@ public abstract class ScaleDetector {
             int ImageHeight = curveImage.getImage().getHeight();
             int ImageWidth = curveImage.getImage().getWidth();
             
-            for(int yPixelPosition = 0; yPixelPosition < ImageHeight; yPixelPosition++){
+            for(int yPixelPosition = ImageHeight - 1; yPixelPosition >= 0; yPixelPosition--){
                 for(int xPixelPosition = 0; xPixelPosition < ImageWidth; xPixelPosition++){
                     if(curveImage.getImage().getRGB(xPixelPosition, yPixelPosition) == backgroundColor.getRGB()){
                         scaleCapture.detectBackground();

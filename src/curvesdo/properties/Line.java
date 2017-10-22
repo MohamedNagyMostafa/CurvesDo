@@ -42,8 +42,8 @@ public class Line {
     }
     
     public double getLength(){
-        return Math.sqrt(Math.pow((mEndPoint.getX() - mStartPoint.getX()), 2) + 
-                Math.pow((mEndPoint.getY() - mStartPoint.getY()), 2));
+        return Math.sqrt(Math.pow((Math.abs(mEndPoint.getX() - mStartPoint.getX())), 2) + 
+                Math.pow((Math.abs(mEndPoint.getY() - mStartPoint.getY())), 2));
     }
     
 }
