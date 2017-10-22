@@ -6,23 +6,22 @@
 package curvesdo.properties;
 
 import Exceptions.ColorNotFound;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author mohamednagy
  */
-public class ImageColors {
+public class ImageDetails {
     private Color mBackgroundColor;
-    private Color mScaleColor;
+    private Scale mScale;
     
-    private List<Color> mCurvesColors;
+    private List<Color> mImageColors;
+    private List<Curve> mCurves;
     
     public void addColors(List<Color> colors){
-        mCurvesColors = colors;
+        mImageColors = colors;
     }
     
     public void setBackgroundColor(Color backgroundColor){
@@ -30,9 +29,9 @@ public class ImageColors {
         mBackgroundColor = backgroundColor;
     }
     
-    public void setScaleColor(int scaleColorRGB){
-        remove(scaleColorRGB);
-        mScaleColor = new Color(scaleColorRGB);
+    public void setScale(Scale scale){
+        remove(scale.getScaleColorRGB());
+        mScale = scale;
     }
 
     public Color getBackgroundColor() throws ColorNotFound {
@@ -43,30 +42,33 @@ public class ImageColors {
         }
     }
 
-    public Color getScaleColor() throws ColorNotFound {
-        if(mScaleColor != null){
-            return mScaleColor;
+    public Scale getScale() throws ColorNotFound {
+        if(mScale != null){
+            return mScale;
         }else{
-            throw new ColorNotFound("No color for scale");
+            throw new ColorNotFound("No scale is found");
         }
     }
     
     public void remove(int colorRGB){
-        for(Color color : mCurvesColors){
+        for(Color color : mImageColors){
             if(color.getRGB() == colorRGB){
-                mCurvesColors.remove(mCurvesColors.indexOf(color));
+                mImageColors.remove(mImageColors.indexOf(color));
                 break;
             }
         }
     }
     
-    public Curve[] getCurves(){
-        Curve[] curves = new Curve[mCurvesColors.size()];
-        for(int curveColorIndex = 0; curveColorIndex < mCurvesColors.size(); curveColorIndex++){
-            curves[curveColorIndex] = new Curve(mCurvesColors.get(curveColorIndex));
-        }
+    public List<Curve> getCurves(){
+        if(mCurves == null)
+            setCurves();
         
-        return curves;
+        return mCurves;
     }
     
+    private void setCurves(){
+        mImageColors.forEach((color) -> {
+            mCurves.add(new Curve(color));
+        });
+    }
 }

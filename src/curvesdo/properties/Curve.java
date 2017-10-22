@@ -17,6 +17,7 @@ public class Curve {
     
     private List<Point> mCurveMaxPointList;
     private List<Point> mCurveMinPointList;
+    private List<Point> mCurveRoutePoints;
     
     private Point mCurveMaxPoint;
     private Point mCurveMinPoint;
@@ -61,5 +62,11 @@ public class Curve {
             return (T)mCurveMinPoint;
     }
     
+    public void setCurveRoutePoints(List<Point> points){
+        mCurveRoutePoints = points;
+    }
     
+    public List<Point> getCurveRoutePoints(){
+        return mCurveRoutePoints;
+    }
 }
