@@ -49,7 +49,8 @@ public class ScaleCapture {
                     mLineTaller.setColor(mLineTester.getColor());
                 }
             }else{
-                mLineTaller = mLineTester;mLineTaller.setStartPoint(mLineTester.getStartPoint());
+                mLineTaller = mLineTester;
+                mLineTaller.setStartPoint(mLineTester.getStartPoint());
                 mLineTaller.setEndPoint(mLineTester.getEndPoint());
                 mLineTaller.setColor(mLineTester.getColor());
             }

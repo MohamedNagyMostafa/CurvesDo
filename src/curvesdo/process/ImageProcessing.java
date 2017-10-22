@@ -7,7 +7,6 @@ package curvesdo.process;
 
 import Exceptions.ColorNotFound;
 import curvesdo.process.backgroundColor.ImageColorWatcher;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import curvesdo.process.scale.ScaleDetector;
 import curvesdo.properties.ImageColors;
 import curvesdo.properties.Scale;
@@ -45,12 +44,7 @@ public class ImageProcessing extends Thread{
                     new ScaleDetector(imageColors.getBackgroundColor()) {
                         @Override
                         public void onFinished(Scale scale) {
-                            imageColors.setScaleColor(scale.getScaleColorRGB());
-                            try {
-                                Util.println("background " + imageColors.getBackgroundColor().getRed() + " scale " + imageColors.getScaleColor().getRed());
-                            } catch (ColorNotFound ex) {
-                                Logger.getLogger(ImageProcessing.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+                            
                         }
                     };
                 } catch (ColorNotFound ex) {

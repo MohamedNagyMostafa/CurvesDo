@@ -7,7 +7,6 @@ package curvesdo.process.scale;
 
 import curvesdo.properties.Scale;
 import static com.sun.corba.se.impl.util.Utility.printStackTrace;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import curvesdo.process.CurveImage;
 import curvesdo.properties.Point;
 import java.awt.Color;
