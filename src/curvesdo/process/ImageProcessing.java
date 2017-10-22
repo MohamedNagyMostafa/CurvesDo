@@ -8,7 +8,7 @@ package curvesdo.process;
 import Exceptions.ColorNotFound;
 import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
 import curvesdo.process.backgroundColor.ImageColorWatcher;
-import curvesdo.process.max_min_point.MaxMinPointDetector;
+import curvesdo.process.curve_route.CurveRouteDetector;
 import curvesdo.process.scale.ScaleDetector;
 import curvesdo.properties.Curve;
 import curvesdo.properties.ImageDetails;
