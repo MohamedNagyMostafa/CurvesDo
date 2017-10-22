@@ -42,14 +42,6 @@ public class ImageColors {
         }
     }
 
-    public List<Color> getCurvesColors() throws ColorNotFound {
-        if(mCurvesColors != null){
-            return mCurvesColors;
-        }else{
-            throw new ColorNotFound("No colors in image");
-        }
-    }
-
     public Color getScaleColor() throws ColorNotFound {
         if(mScaleColor != null){
             return mScaleColor;
@@ -65,6 +57,16 @@ public class ImageColors {
                 break;
             }
         }
+    }
+    
+    public Curve[] getCurves(){
+        Curve[] curves = new Curve[mCurvesColors.size()];
+        
+        for(int curveColorIndex = 0; curveColorIndex < mCurvesColors.size(); curveColorIndex++){
+            curves[curveColorIndex].setCurveColor(mCurvesColors.get(curveColorIndex));
+        }
+        
+        return curves;
     }
     
 }
