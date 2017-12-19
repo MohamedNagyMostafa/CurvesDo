@@ -17,6 +17,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import methods.GThread;
 
 
@@ -36,14 +38,14 @@ public class CurveRouteDetector {
     private final ImageDetails mImageDetails;
     
     public CurveRouteDetector(List<Curve> curves, Point startVerticalPoint,
-            Point endVerticalPoint, Point startHorizontalPoint, Point endHorizontalPoint){
+            Point endVerticalPoint, Point startHorizontalPoint, Point endHorizontalPoint, ImageDetails imageDetails){
         mCurves = curves;
         mStartHorizontalPoint= startHorizontalPoint;
         mStartVerticalPoint = startVerticalPoint;
         mEndVerticalPoint = endVerticalPoint;
         mEndHorizontalPoint = endHorizontalPoint;
         mGThreads = new GThread[mCurves.size()];
-        
+        mImageDetails = imageDetails;
         init();
     }
     
@@ -59,13 +61,8 @@ public class CurveRouteDetector {
                     
                     Color curveColor = mCurves.get(curveIndex).getCurveColor();
                     List<Point> points = new ArrayList<>();
-                    
-                    while(curveStartPoint != null){
-                        points.add(curveStartPoint);
-                        curveStartPoint = nextPoint(curveStartPoint, curveColor);
-                    }
-                    
-                    return points;
+      
+                    return detectCurve(points,curveStartPoint, curveColor);
                 }
 
                 @Override
@@ -79,18 +76,39 @@ public class CurveRouteDetector {
     
     private List<Point> detectCurve(List<Point> points, Point point, Color color){
         if(point != null){
-            points.add(point);
-            int pointsNumber = points.size();
-            points = lineWatcher(points, point, color);
-            if(points.size() == pointsNumber)
-                return detectCurve(points, null, color);
-            else{
-                point = nextLinePoint(color);
-                return detectCurve(points, point, color);
+            try {
+                points.add(point);
+                int pointsNumber = points.size();
+                points = lineWatcher(points, point, color);
+                if(points.size() == pointsNumber)
+                    return detectCurve(points, null, color);
+                else{
+                    point = nextLinePoint(color, point.getX() + 1);
+                    return detectCurve(points, point, color);
+                }
+            } catch (ColorNotFound ex) {
+                Logger.getLogger(CurveRouteDetector.class.getName()).log(Level.SEVERE, null, ex);
+            }finally{
+                return null;
             }
         }else{
             return points;
         }
+    }
+    
+    private Point nextLinePoint(Color color, int xCoor){
+        int y_startCoor = mStartVerticalPoint.getY();
+        int y_endCoor = mEndVerticalPoint.getY();
+        CurveImage curveImage = CurveImage.getInstance();
+        
+        for(int yCoor = y_startCoor; yCoor >= y_endCoor; yCoor--){
+            int pixelColor = curveImage.getImage().getRGB(xCoor, yCoor);
+            if(pixelColor == color.getRGB()){
+                return new Point(xCoor, yCoor);
+            }
+        }
+        
+        return null;
     }
     /**
      * Detect Line 

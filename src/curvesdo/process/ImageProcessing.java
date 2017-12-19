@@ -61,7 +61,8 @@ public class ImageProcessing extends Thread{
                                         imageDetails.getScale().getVerticalLine().getStartPoint(),
                                         imageDetails.getScale().getVerticalLine().getEndPoint(),
                                         imageDetails.getScale().getHorizontalLine().getStartPoint(),
-                                        imageDetails.getScale().getHorizontalLine().getEndPoint());
+                                        imageDetails.getScale().getHorizontalLine().getEndPoint(),
+                                        imageDetails);
                                 
                                 int workers = 4;
                                 
