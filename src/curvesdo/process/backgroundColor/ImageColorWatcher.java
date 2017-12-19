@@ -34,7 +34,6 @@ public abstract class ImageColorWatcher {
             
             onFinished(imageColor, imageColor.getBackgroundColor());
         }).start();
-    }
-    
+    }   
     public abstract void onFinished(List<Color> colorsInImage, Color backgroundColor);
 }

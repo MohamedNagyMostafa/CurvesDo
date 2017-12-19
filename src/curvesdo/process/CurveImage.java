@@ -12,13 +12,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- *
+ *  Holder for image path
  * @author mohamednagy
  */
 public class CurveImage {
     private BufferedImage mBufferedImage;
     private static final String IMAGE_PATH = 
-            "C:\\Users\\mohamednagy.mohamednagy-PC\\Desktop\\Seasons1\\2009\\autumn-avg.png";
+            "E:\\Seasons1\\2009\\autumn-avg.png";
     
     private CurveImage(){
         try{

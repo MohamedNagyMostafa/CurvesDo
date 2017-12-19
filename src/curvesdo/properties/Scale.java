@@ -58,7 +58,7 @@ public class Scale {
     private void refreshScaleLines(){
         for(int swaperCount = 0 ; swaperCount < MAX_SWAPPING ; swaperCount++){
             if(!checker()){
-                if(swaperCount % 2 == 0){
+                if(swaperCount % 2 == 0){ // to test all cases.
                     swapLine(mVerticalLine);
                 }else{
                     swapLine(mHorizontalLine);
@@ -74,7 +74,10 @@ public class Scale {
         lineScale.setStartPoint(lineScale.getEndPoint());
         lineScale.setEndPoint(startPoint);
     }
-    
+    /**
+     * Check to start points are same.
+     * @return 
+     */
     private boolean checker(){
         return (mVerticalLine.getStartPoint().getX() == mHorizontalLine.getStartPoint().getX() &&
                 mVerticalLine.getStartPoint().getY() == mHorizontalLine.getStartPoint().getY());

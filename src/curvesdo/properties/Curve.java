@@ -59,7 +59,7 @@ public class Curve {
         if(mCurveMinPoint != null)
             return (T)mCurveMinPoint;
         else
-            return (T)mCurveMinPoint;
+            return (T)mCurveMinPointList;
     }
     
     public void setCurveRoutePoints(List<Point> points){

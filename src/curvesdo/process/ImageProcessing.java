@@ -53,6 +53,7 @@ public class ImageProcessing extends Thread{
                             try {
                                 scale.refresh();
                                 imageDetails.setScale(scale);
+                               
                                 
                                 CurveRouteDetector curveRouteDetector = 
                                         new CurveRouteDetector(
@@ -62,7 +63,7 @@ public class ImageProcessing extends Thread{
                                         imageDetails.getScale().getHorizontalLine().getStartPoint(),
                                         imageDetails.getScale().getHorizontalLine().getEndPoint());
                                 
-                                int workers = 1;
+                                int workers = 4;
                                 
                                 ScheduleGThread scheduleGThread = new ScheduleGThread(
                                         workers,
